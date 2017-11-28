@@ -1,8 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 struct word{
-  int num;
-  int score;
+  int num;//出現回数のカウント対象となる数字
+  int score;//出現回数
+  int sign;//出現回数に応じたhahuman符号を割り当てる.
 };
 
 int main(){
@@ -10,10 +14,13 @@ int main(){
 char txt[20];
 struct word word[10];
 int tmp;
+
+
 //structの初期化
  for(int i=0;i<10;i++){
    word[i].num=0;
    word[i].score=i;
+   word[i].sign=0;
  }
 
 //stdinからの入力受付
@@ -46,14 +53,20 @@ for(int i=0; i<9; i++){
     }
   }
 }
+
+
+//ハフマン符号の構成
+for(int i=0;i<10;i++){
+  for(int j=0;j<=i;j++){
+     if(i!=0)word[i].sign =10*word[i-1].sign +10;
+  }
+}
+
 printf("num \t exist \t hahuman's sign\n");
+
 //確認
 for(int i=0;i<10;i++){
-  printf("%d \t %d \t ",word[i].score,word[i].num);
-  for(int j=0;j<=i;j++){
-    if(j==i)printf("0\n");
-    else printf("1");
-  }
+  printf("%d \t %d \t %d \n",word[i].score,word[i].num,word[i].sign);
 }
 
 return 0;
